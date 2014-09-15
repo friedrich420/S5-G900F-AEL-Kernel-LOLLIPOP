@@ -19,9 +19,13 @@ obj-$(CONFIG_IOSCHED_CFQ)	+= cfq-iosched.o
 obj-$(CONFIG_IOSCHED_TEST)	+= test-iosched.o
 obj-$(CONFIG_IOSCHED_SIO)	+= sio-iosched.o
 obj-$(CONFIG_IOSCHED_FIOPS)	+= fiops-iosched.o
+<<<<<<< HEAD
 obj-$(CONFIG_IOSCHED_ZEN)	+= zen-iosched.o
 obj-$(CONFIG_IOSCHED_SIOPLUS)  += sioplus-iosched.o
 obj-$(CONFIG_IOSCHED_TRIPNDROID)	+= tripndroid-iosched.o
+=======
+obj-$(CONFIG_IOSCHED_BFQ)	+= bfq-iosched.o
+>>>>>>> 5d9de92... block: cgroups, kconfig, build bits for BFQ-v7r5-3.4
 
 obj-$(CONFIG_BLOCK_COMPAT)	+= compat_ioctl.o
 obj-$(CONFIG_BLK_DEV_INTEGRITY)	+= blk-integrity.o
