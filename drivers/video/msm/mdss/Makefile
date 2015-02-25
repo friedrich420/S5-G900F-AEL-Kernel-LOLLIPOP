@@ -158,3 +158,9 @@ endif
 
 obj-$(CONFIG_FB_MSM_MDSS_HX8394C_TFT_VIDEO_720P_PANEL) += isl98611-backlight.o
 
+<<<<<<< HEAD
+=======
+obj-$(CONFIG_FB_MSM_MDSS) += lcd_notify.o
+
+obj-$(CONFIG_FB_MSM_MDSS_KCAL_CTRL) += mdss_mdp_kcal_ctrl.o
+>>>>>>> 8a5ae50... LCD_KCAL: Color control driver for mdss_mdp devices
