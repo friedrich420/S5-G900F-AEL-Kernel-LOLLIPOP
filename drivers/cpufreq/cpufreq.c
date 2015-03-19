@@ -31,6 +31,7 @@
 #include <linux/syscore_ops.h>
 
 #include <trace/events/power.h>
+#include <linux/kt_wake_funcs.h>
 
 /**
  * The "cpufreq driver" - the arch- or hardware-dependent low
@@ -49,6 +50,16 @@ static DEFINE_PER_CPU(struct cpufreq_cpu_save_data, cpufreq_policy_save);
 #endif
 static DEFINE_SPINLOCK(cpufreq_driver_lock);
 
+<<<<<<< HEAD
+=======
+bool call_in_progress=false;
+
+static unsigned int min_freq_hardlimit[4] = {0, 0, 0, 0};
+static unsigned int max_freq_hardlimit[4] = {0, 0, 0, 0};
+#define GOVERNOR_NAME_MAX	16
+static char governor_hard[4][GOVERNOR_NAME_MAX];
+
+>>>>>>> 6e8d70c... synaptics_i2c_rmi: Screen wake and sleep functions
 /*
  * cpu_policy_rwsem is a per CPU reader-writer semaphore designed to cure
  * all cpufreq/hotplug/workqueue/etc related lock issues.
@@ -1898,6 +1909,12 @@ no_policy:
 	return ret;
 }
 EXPORT_SYMBOL(cpufreq_update_policy);
+
+void set_call_in_progress(bool state)
+{
+	call_in_progress = state;
+	//pr_alert("CALL IN PROGRESS: %d\n", state);
+}
 
 static int __cpuinit cpufreq_cpu_callback(struct notifier_block *nfb,
 					unsigned long action, void *hcpu)
