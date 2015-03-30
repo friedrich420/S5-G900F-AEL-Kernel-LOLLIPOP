@@ -25,6 +25,9 @@
 #include <linux/slab.h>
 #include <linux/input.h>
 #include <linux/time.h>
+#ifdef CONFIG_CPUFREQ_LIMIT
+#include <linux/cpufreq_limit.h>
+#endif
 
 struct cpu_sync {
 	struct task_struct *thread;
@@ -169,6 +172,11 @@ static int boost_mig_sync_thread(void *data)
 			continue;
 
 		cancel_delayed_work_sync(&s->boost_rem);
+#ifdef CONFIG_CPUFREQ_LIMIT
+        	s->boost_min = check_cpufreq_limit(req_freq);
+#else
+		s->boost_min = src_policy.cur;
+#endif
 		if (sync_threshold) {
 			if (src_policy.cur >= sync_threshold)
 				s->boost_min = sync_threshold;
