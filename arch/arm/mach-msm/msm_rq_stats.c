@@ -76,7 +76,7 @@ static inline u64 get_cpu_idle_time_jiffy(unsigned int cpu, u64 *wall)
 	return jiffies_to_usecs(idle_time);
 }
 
-static inline cputime64_t get_cpu_idle_time(unsigned int cpu, cputime64_t *wall)
+u64 get_cpu_idle_time(unsigned int cpu, u64 *wall)
 {
 	u64 idle_time = get_cpu_idle_time_us(cpu, NULL);
 
@@ -98,6 +98,7 @@ static inline cputime64_t get_cpu_iowait_time(unsigned int cpu,
 
 	return iowait_time;
 }
+EXPORT_SYMBOL_GPL(get_cpu_idle_time);
 
 static int update_average_load(unsigned int freq, unsigned int cpu)
 {
