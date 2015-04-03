@@ -9,7 +9,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-
+#include <linux/cpufreq_kt.h>
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/kernel.h>
@@ -26,7 +26,6 @@
 #ifdef CONFIG_SEC_DEBUG
 #include <mach/sec_debug.h>
 #endif
-#include <linux/kt_wake_funcs.h>
 
 #define PMIC_VER_8941           0x01
 #define PMIC_VERSION_REG        0x0105
@@ -144,16 +143,16 @@ struct qpnp_pon_config {
 	bool use_bark;
 };
 
-// AP: this has been moved to qpnp-power-on.h
-//struct qpnp_pon {
-//	struct spmi_device *spmi;
-//	struct input_dev *pon_input;
-//	struct qpnp_pon_config *pon_cfg;
-//	int num_pon_config;
-//	int powerkey_state;
-//	u16 base;
-//	struct delayed_work bark_work;
-//};
+
+struct qpnp_pon {
+	struct spmi_device *spmi;
+	struct input_dev *pon_input;
+	struct qpnp_pon_config *pon_cfg;
+	int num_pon_config;
+	int powerkey_state;
+	u16 base;
+	struct delayed_work bark_work;
+};
 
 static struct qpnp_pon *sys_reset_dev;
 #ifdef CONFIG_SEC_PM_DEBUG
