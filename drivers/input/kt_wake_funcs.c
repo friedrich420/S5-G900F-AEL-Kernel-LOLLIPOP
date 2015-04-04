@@ -1,4 +1,5 @@
 #include <linux/kt_wake_funcs.h>
+#include <linux/qpnp/power-on.h>
 
 struct qpnp_pon *screenwake_pwrdev;
 DEFINE_MUTEX(scr_lock);
@@ -18,7 +19,6 @@ bool screen_is_off = false;
 unsigned int screen_wake_options = 0; // 0 = disabled; 1 = s2w; 2 = s2w only while charging; 3 = dtap2wake; 4 = dtap2wake only while charging; 5 = both; 6 = both while charging
 unsigned int screen_wake_options_prox_max = 55;
 unsigned int screen_wake_options_debug = 0;
-unsigned int screen_wake_options_hold_wlock = 0;
 unsigned int screen_wake_options_when_off = 0;
 unsigned int screen_sleep_options = 0; // 0 = disabled; 1 = dtap2sleep
 
@@ -31,7 +31,7 @@ void screenwake_presspwr(struct work_struct *screenwake_presspwr_work)
 {
 	pr_alert("POWER TRIGGER CALLED");
 	//if (screen_is_off)
-		//gkt_boost_cpu_call(true, true);
+	//	gkt_boost_cpu_call(true, true);
 	
 	input_report_key(screenwake_pwrdev->pon_input, 116, 1);
 	input_sync(screenwake_pwrdev->pon_input);

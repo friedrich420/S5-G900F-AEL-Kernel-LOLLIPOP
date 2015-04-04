@@ -75,29 +75,6 @@ static ssize_t synaptics_rmi4_screen_wake_options_debug_store(struct device *dev
 	return count;
 }
 
-static ssize_t synaptics_rmi4_screen_wake_options_hold_wlock_show(struct device *dev,
-		struct device_attribute *attr, char *buf)
-{
-	int ret;
-	ret = sprintf(buf, "%d\n", screen_wake_options_hold_wlock);
-	return ret;
-}
-static ssize_t synaptics_rmi4_screen_wake_options_hold_wlock_store(struct device *dev,
-		struct device_attribute *attr, const char *buf, size_t count)
-{
-	int retval;
-	unsigned int val = 0;
-
-	retval = sscanf(buf, "%d", &val);
-	if (retval != 0 && val >= 0 && val <= 19) {
-		screen_wake_options_hold_wlock = val;
-	}
-	//TODO
-	//check_options_while_soff(dev);
-	return count;
-
-}
-
 static ssize_t synaptics_rmi4_screen_sleep_options_show(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
@@ -125,9 +102,6 @@ static struct device_attribute attrs[] = {
 	__ATTR(screen_wake_options_debug, (S_IRUGO | S_IWUSR | S_IWGRP),
 			synaptics_rmi4_screen_wake_options_debug_show,
 			synaptics_rmi4_screen_wake_options_debug_store),
-	__ATTR(screen_wake_options_hold_wlock, (S_IRUGO | S_IWUSR | S_IWGRP),
-			synaptics_rmi4_screen_wake_options_hold_wlock_show,
-			synaptics_rmi4_screen_wake_options_hold_wlock_store),
 	__ATTR(screen_wake_options_prox_max, (S_IRUGO | S_IWUSR | S_IWGRP),
 			synaptics_rmi4_screen_wake_options_prox_max_show,
 			synaptics_rmi4_screen_wake_options_prox_max_store),
