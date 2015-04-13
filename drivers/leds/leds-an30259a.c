@@ -437,10 +437,7 @@ static void an30259a_start_led_pattern(int mode)
 		break;
 
 	case POWERING:
-		pr_info("LED Powering Pattern on\n");
-		leds_on(LED_B, true, true, LED_DYNAMIC_CURRENT);
-		leds_set_slope_mode(client, LED_B,
-				0, 15, 12, 8, 2, 2, 3, 3, 3, 3);
+		leds_on(LED_B, true, false, cur);
 		break;
 
 	default:
@@ -502,9 +499,7 @@ static void an30259a_set_led_blink(enum an30259a_led_enum led,
 
 	leds_on(led, true, (delay_off_time > 0), brightness);
 
-<<<<<<< HEAD
 	leds_set_slope_mode(client, led, 0, 15, 15, 0,
-=======
 	if (leds_control.blink_fading)
 		leds_set_slope_mode(client, led, 1, 15, 7, 0, 
 				(delay_on_time + AN30259A_TIME_UNIT - 1) /
@@ -517,7 +512,6 @@ static void an30259a_set_led_blink(enum an30259a_led_enum led,
 				leds_control.fade_dt4);
 	else
 		leds_set_slope_mode(client, led, 1, 15, 15, 0,
->>>>>>> 427e374... leds: add LED control (fading & brightness)
 				(delay_on_time + AN30259A_TIME_UNIT - 1) /
 				AN30259A_TIME_UNIT,
 				(delay_off_time + AN30259A_TIME_UNIT - 1) /
