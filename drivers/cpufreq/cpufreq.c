@@ -52,11 +52,6 @@ static DEFINE_SPINLOCK(cpufreq_driver_lock);
 
 bool call_in_progress=false;
 
-static unsigned int min_freq_hardlimit[4] = {0, 0, 0, 0};
-static unsigned int max_freq_hardlimit[4] = {0, 0, 0, 0};
-#define GOVERNOR_NAME_MAX	16
-static char governor_hard[4][GOVERNOR_NAME_MAX];
-
 /*
  * cpu_policy_rwsem is a per CPU reader-writer semaphore designed to cure
  * all cpufreq/hotplug/workqueue/etc related lock issues.
@@ -1779,6 +1774,7 @@ static int __cpufreq_set_policy(struct cpufreq_policy *data,
 				struct cpufreq_policy *policy)
 {
 	int ret = 0;
+	struct cpufreq_policy *cpu0_policy = NULL;
 
 	pr_debug("setting new policy for CPU %u: %u - %u kHz\n", policy->cpu,
 		policy->min, policy->max);
@@ -1818,8 +1814,14 @@ static int __cpufreq_set_policy(struct cpufreq_policy *data,
 	blocking_notifier_call_chain(&cpufreq_policy_notifier_list,
 			CPUFREQ_NOTIFY, policy);
 
-	data->min = policy->min;
-	data->max = policy->max;
+	if (policy->cpu >= 1) {
+		cpu0_policy = cpufreq_cpu_get(0);
+		data->min = cpu0_policy->min;
+		data->max = cpu0_policy->max;
+	} else {
+        data->min = policy->min;
+        data->max = policy->max;
+	}
 
 	pr_debug("new min and max freqs are %u - %u kHz\n",
 					data->min, data->max);
