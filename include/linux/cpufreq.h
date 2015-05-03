@@ -541,6 +541,11 @@ extern struct cpufreq_governor cpufreq_gov_blu_active;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_MYTHX_PLUG)
 extern struct cpufreq_governor cpufreq_gov_myhtx_plug;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_myhtx_plug)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_BARRY_ALLEN)
+extern struct cpufreq_governor cpufreq_gov_barry_allen;
+#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_barry_allen)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_HYPER)
+extern struct cpufreq_governor cpufreq_gov_hyper;
 #endif
 
 
